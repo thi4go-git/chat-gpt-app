@@ -21,6 +21,7 @@ export class VoiceRecognitionService {
     this.recognition.lang = 'pt-BR';
 
     this.recognition.addEventListener('result', (es: { results: Iterable<any> | ArrayLike<any>; }) => {
+
       const teste = Array.from(es.results);
       let fala: SpeechRecognitionResult = teste[0];
       if (fala.isFinal) {
