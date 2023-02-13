@@ -35,7 +35,6 @@ export class AppComponent implements OnInit {
   processar() {
     if (this.habilitado == true) {
       this.startService();
-
     } else {
       this.stopService();
     }

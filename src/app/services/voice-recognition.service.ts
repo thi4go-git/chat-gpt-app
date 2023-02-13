@@ -11,7 +11,6 @@ export class VoiceRecognitionService {
   recognition = new webkitSpeechRecognition();
   isStoppedSpeechRecog = false;
   text: string = '';
-  tempWords: any;
 
   constructor() { }
 
@@ -39,8 +38,7 @@ export class VoiceRecognitionService {
       if (this.isStoppedSpeechRecog) {
         this.recognition.stop();
         console.log("End speech recognition")
-      } else {
-        this.wordConcat()
+      } else { 
         this.recognition.start();
       }
     });
@@ -48,13 +46,11 @@ export class VoiceRecognitionService {
 
   stop() {
     this.isStoppedSpeechRecog = true;
-    this.wordConcat()
+
     this.recognition.stop();
     console.log("End speech recognition")
+    this.text = '';
   }
 
-  wordConcat() {
-    this.text = this.text + ' ' + this.tempWords + '.';
-    this.tempWords = '';
-  }
+ 
 }
