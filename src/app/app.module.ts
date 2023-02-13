@@ -14,6 +14,8 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms'
 
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { ChatgptService } from './services/chatgpt.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -33,9 +35,12 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    ChatgptService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

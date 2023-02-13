@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ChatgptService } from './chatgpt.service';
 
 
 
@@ -12,7 +13,7 @@ export class VoiceRecognitionService {
   isStoppedSpeechRecog = false;
   text: string = '';
 
-  constructor() { }
+  constructor(private service: ChatgptService) { }
 
   init() {
 
@@ -24,7 +25,7 @@ export class VoiceRecognitionService {
       let fala: SpeechRecognitionResult = teste[0];
       if (fala.isFinal) {
         this.text = fala[0].transcript;
-        console.log(this.text.trim);
+        this.obterResposta();
       }
     });
 
@@ -38,7 +39,7 @@ export class VoiceRecognitionService {
       if (this.isStoppedSpeechRecog) {
         this.recognition.stop();
         console.log("End speech recognition")
-      } else { 
+      } else {
         this.recognition.start();
       }
     });
@@ -52,5 +53,33 @@ export class VoiceRecognitionService {
     this.text = '';
   }
 
- 
+
+  obterResposta() {
+    this.service
+      .obterResposta(this.text).subscribe({
+        next: (resposta) => {
+          let text: string = '';
+          text = text + resposta.choices[0].text;
+          console.log(text);
+          this.respostaEmVozAPI(text);
+        },
+        error: (errorResponse) => {
+          console.log("Erro");
+          console.log(errorResponse);
+        }
+      });
+  }
+
+
+  respostaEmVozAPI(text: string) {
+    const synth = window.speechSynthesis;
+    const speak = (text: string) => {
+      const utterance = new SpeechSynthesisUtterance(text);
+      synth.speak(utterance);
+    };
+
+    speak(text);
+  }
+
+
 }
